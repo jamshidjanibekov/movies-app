@@ -5,7 +5,7 @@ import { IMovie } from 'src/interfaces/app.interface'
 import { API_REQUEST } from 'src/services/api.service'
 
 
-export default function Home({trending, topRated, tvTopRated, popular,documentary,family,history,comedy}:HomeProps):JSX.Element {
+export default function Home({trending, topRated, tvTopRated, popular, documentary, family, history, comedy}:HomeProps):JSX.Element {
 
   return (
     <div className='relative min-h-screen'>
@@ -24,8 +24,8 @@ export default function Home({trending, topRated, tvTopRated, popular,documentar
             <Row title='Popular' movies={popular} isBig={false}/>
             <Row title='Documentary' movies={documentary.reverse()} isBig={false}/>
             <Row title='History' movies={history} isBig={false}/>
-            <Row title='Family' movies={family} isBig={false}/>
-            <Row title='Comedy' movies={comedy.reverse()} isBig={false}/>
+            <Row title='Family' movies={family.reverse()} isBig={false}/>
+            <Row title='Comedy' movies={comedy} isBig={false}/>
         </section>
       </main>
     </div>
@@ -52,7 +52,7 @@ export const getServerSideProps:GetServerSideProps<HomeProps> = async()=>{
       popular:popular.results,
       documentary:documentary.results,
       comedy:comedy.results,
-      family:comedy.results,
+      family:family.results,
       history:history.results,
     },
   };
