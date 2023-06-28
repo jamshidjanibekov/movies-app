@@ -3,10 +3,14 @@ import Head from 'next/head'
 import { Header, Hero, Row } from 'src/components'
 import { IMovie } from 'src/interfaces/app.interface'
 import { API_REQUEST } from 'src/services/api.service'
+import {useContext} from "react";
+import {AuthContext} from "../context/auth.context";
 
 
 export default function Home({trending, topRated, tvTopRated, popular, documentary, family, history, comedy}:HomeProps):JSX.Element {
+    const {isLoading}= useContext(AuthContext)
 
+    if (isLoading) return <>{null}</>;
   return (
     <div className='relative min-h-screen'>
       <Head>
