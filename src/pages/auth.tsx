@@ -7,9 +7,14 @@ import * as Yup from  'yup'
 import {email} from "@firebase/auth/dist/test/helpers/integration/helpers";
 import {string} from "yup";
 import {AuthContext} from "../context/auth.context";
+import {useRouter} from "next/router";
 const Auth = () => {
     const [auth, setAuth] = useState<'signup' | 'signin'>('signin')
-    const {error, isLoading, logout, signIn, signUp} = useContext(AuthContext)
+    const {error, isLoading, logout, signIn, signUp, user} = useContext(AuthContext);
+    const router = useRouter()
+
+    if(user) router.push('/')
+    if (!isLoading)return <>Loading...</>
     const toggleAuth = (state: 'signup' | 'signin') =>{
         // @ts-ignore
         setAuth(state);

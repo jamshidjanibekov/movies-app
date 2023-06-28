@@ -1,4 +1,4 @@
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, User} from 'firebase/auth'
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,  User} from 'firebase/auth'
 import {auth} from 'src/firebase'
 import {useState} from "react";
 import {useSelect} from "@mui/base";
@@ -38,5 +38,5 @@ export const useAuth = ()=>{
         .catch(error => setError(error.message))
         .finally(()=>setIsLoading(false))
     }
-    return{error, isLoading, user, signIn, signUp, logout}
+    return{error, isLoading, user, signIn, signUp, logout, setUser, setIsLoading }
 }
