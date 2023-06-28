@@ -5,11 +5,14 @@ import { IMovie } from 'src/interfaces/app.interface'
 import { API_REQUEST } from 'src/services/api.service'
 import {useContext} from "react";
 import {AuthContext} from "../context/auth.context";
+import {useInfoStore} from "../store";
 
 
 export default function Home({trending, topRated, tvTopRated, popular, documentary, family, history, comedy}:HomeProps):JSX.Element {
+    const {setModal, modal} = useInfoStore()
     const {isLoading}= useContext(AuthContext)
 
+    console.log(modal)
     if (isLoading) return <>{null}</>;
   return (
     <div className='relative min-h-screen'>
