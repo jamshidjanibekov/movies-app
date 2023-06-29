@@ -9,7 +9,7 @@ export const API_REQUEST ={
   documentary:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=99`,
   comedy:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=35`,
   family:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=3107515`,
-  history:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=36`
+  history:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=36`,
 
 
 
