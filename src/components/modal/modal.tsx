@@ -1,6 +1,6 @@
 import MuiModal from "@mui/material/Modal";
 import {useInfoStore} from "src/store";
-import {FaPlay, FaTimes} from "react-icons/fa";
+import {FaPause, FaPlay, FaTimes} from "react-icons/fa";
 import React, {useEffect, useState} from "react";
 import { Element} from "src/interfaces/app.interface";
 import ReactPlayer from "react-player";
@@ -9,10 +9,17 @@ import {BsVolumeMute, BsVolumeDown} from  'react-icons/bs'
 import {AiOutlineLike} from "react-icons/ai";
 
 
+function FaPuse() {
+    return null;
+}
+
 const Modal = () =>{
     const {modal, setModal, currentMovie} = useInfoStore();
     const [trailer, setTrailer] = useState<string>('')
     const [muted, setMuted] = useState<boolean>(true)
+    const [playing, setPlaying] = useState<boolean>(true)
+
+
     const base_url = process.env.NEXT_PUBLIC_API_DOMAIN  as string
     const api_key = process.env.NEXT_PUBLIC_API_KEY as string
 
@@ -39,12 +46,26 @@ const Modal = () =>{
                 <FaTimes/>
             </button>
             <div className='relative pt-[55%]'>
-                <ReactPlayer url={`https://www.youtube.com/watch?v=${trailer} `}height={'100%'} width={'100%'} playing style={{position:'absolute', top: 0, left:0}} muted={muted}/>
-                 <div className='absolute bottom-10 flex w-full items-center justify-between px-18'>
+                <ReactPlayer url={`https://www.youtube.com/watch?v=${trailer} `}
+                     height={'100%'} width={'100%'}
+                     playing= {playing}
+                     style={{position:'absolute', top: 0, left:0}}
+                     muted={muted}
+                />
+                 <div className='absolute bottom-10 left-10 flex w-full items-center justify-between px-18'>
                      <div className='flex space-x-2'>
-                         <button className='flex items-center gap-x-2 rotate-0 bg-white px-8 py-2 text-xl font-bold text-black transition hover:bg-[#e6e6e6]'>
-                             <FaPlay className='h-7 w-7 text-black'/>
-                             Play
+                         <button onClick={()=> setPlaying(prev => !prev )} className='flex items-center gap-x-2 rotate-0 bg-white px-8 py-2 text-xl font-bold text-black transition hover:bg-[#e6e6e6]'>
+                             {playing ? (
+                                 <>
+                                    <FaPause/>
+                                     Pause
+                                 </>
+                                 ):(
+                                   <>
+                                    <FaPlay className='h-7 w-7 text-black'/>
+                                    Play
+                                 </>
+                             )}
                          </button>
                          <button className='modalButton'>
                              <BiPlus/>
