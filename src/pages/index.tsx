@@ -3,16 +3,21 @@ import Head from 'next/head'
 import { Header, Hero,Modal, Row } from 'src/components'
 import { IMovie } from 'src/interfaces/app.interface'
 import { API_REQUEST } from 'src/services/api.service'
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {AuthContext} from "../context/auth.context";
 import {useInfoStore} from "../store";
+import {SubscriptionPlan} from "../components";
 
 
 export default function Home({trending, topRated, tvTopRated, popular, documentary, family, history, comedy}:HomeProps): JSX.Element {
     const { modal} = useInfoStore()
     const {isLoading}= useContext(AuthContext)
+    const subscription = false;
 
     if (isLoading) return <>{null}</>;
+
+    if (!subscription) return <SubscriptionPlan/>
+
   return (
     <div className={`relative min-h-screen ${modal && "!h-screen overflow-hidden"}`}>
       <Head>

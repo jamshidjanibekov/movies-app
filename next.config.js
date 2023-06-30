@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['image.tmdb.org', 'rb.gy'],
+    domains: ['image.tmdb.org', 'rb.gy', 'images.unsplash.com'],
   },
 };
 module.exports = nextConfig;
