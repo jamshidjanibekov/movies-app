@@ -11,7 +11,10 @@ const PlanCard = ({product}:PlanCardProps) =>{
                 <img
                     src={product.images[0]}  alt='Colors' className='rounded-xl w-full'
                 />
-                <p className='absolute top-0 bg-black/90 text-white font-semibold py-1 px-3 rounded-tl-lg rounded-br-lg '>${product.default_price.unit_amount} </p>
+                <p className='absolute top-0 bg-black/90 text-white font-semibold py-1 px-3 rounded-tl-lg rounded-br-lg '>
+
+                {(product.default_price.unit_amount/ 100).toLocaleString('en-US', {style:'currency', currency:'USD'})}
+                </p>
                 <div className='absolute rounded-xl left-0 right-0 bottom-0  top-0 bg-black/20 w-full h-full'/>
             </div>
             <div className='border-[1px] border-white/20 mt-4'></div>
