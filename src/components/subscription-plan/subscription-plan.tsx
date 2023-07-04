@@ -5,7 +5,7 @@ import {RiVipCrown2Line} from "react-icons/ri";
 import React from "react";
 import {AiOutlineHourglass, AiOutlineVideoCameraAdd} from "react-icons/ai";
 import {SubscriptionPlanProps} from "./subscription-plan-props";
-import PlanCard from "../../plan-card/plan-card";
+import PlanCard from "../plan-card/plan-card";
 
 
 const SubscriptionPlan = ({products}:SubscriptionPlanProps) => {
