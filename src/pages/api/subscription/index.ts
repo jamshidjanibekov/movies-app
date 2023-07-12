@@ -2,25 +2,19 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import * as process from "process";
 
-
-
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string,{
     apiVersion: '2022-11-15',
 });
-
-
-export default async function handler(  req: NextApiRequest,  res: NextApiResponse<Data>
-) {
+export default async function handler(  req: NextApiRequest,  res: NextApiResponse<Data>) {
     const {method} = req;
 
     if (method==='POST'){
         try {
             const public_domain = process.env.NEXT_PUBLIC_DOMAIN as string;
             const {email, priceId} = req.body;
-            const customers = await stripe.customers.list({limit: 100,});
+            const customers = await stripe.customers.list({limit: 100});
 
             const customer= customers.data.find(c=> c.email === email)
-
             const subscription = await stripe.checkout.sessions.create({
                 mode:'subscription',
                 payment_method_types:["card"],
@@ -42,7 +36,7 @@ export default async function handler(  req: NextApiRequest,  res: NextApiRespon
         return res.status(400).json({message: 'Method not allowed'})
     }
 }
-type Data = {
+interface Data {
     message?: string;
     subscription?:Stripe.Response<Stripe.Checkout.Session>
 }

@@ -1,33 +1,23 @@
 import Head from "next/head";
 import Image from "next/image";
-import {useContext, useState} from "react";
-import {TextField} from "../components";
+import { useState} from "react";
+import {TextField} from "src/components";
 import {Formik, Form} from 'formik';
 import * as Yup from  'yup'
-import {email} from "@firebase/auth/dist/test/helpers/integration/helpers";
-import {string} from "yup";
-import {AuthContext} from "../context/auth.context";
 import {useRouter} from "next/router";
-import {useAuth} from "../hooks/useAuth";
+import {useAuth} from "src/hooks/useAuth";
 const Auth = () => {
     const [auth, setAuth] = useState<'signup' | 'signin'>('signin')
-    const {error, isLoading, logout, signIn, signUp, user, setIsLoading} =useAuth()
+    const {error, isLoading,  signIn, signUp, user, setIsLoading} = useAuth()
     const router = useRouter()
 
     if(user) router.push('/')
     const toggleAuth = (state: 'signup' | 'signin') =>{
-        // @ts-ignore
         setAuth(state);
     }
     const onSubmit = async (formData:{email:string; password:string}) =>{
         if (auth === 'signup') {
-            setIsLoading(true)
-            const response = await  fetch('/api/customer',{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({email:formData.email}),
-            })
-            await  response.json();
+
             signUp(formData.email, formData.password)
         } else {
 
@@ -45,7 +35,7 @@ const Auth = () => {
         <title>Auth</title>
         <meta name='description' content='For watching movies you should sign to app'/>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href='/favicon.ico' />
       </Head>
 
         <Image src={'https://rb.gy/mq245'} alt={'bg'} fill className='object-cover -z-10 !hidden sm:!inline obacity-60'/>
@@ -60,8 +50,9 @@ const Auth = () => {
                         <TextField name='password' placeholder='Password' type={'password'}/>
                     </div>
                         <button type='submit' disabled={isLoading} className='w-full bg-[#e10856] mt-4 py-4 rounded font-semibold'>
-                            {isLoading? 'Loading...':auth === 'signin'?'Sign In':'Sign Up'}
+                            {isLoading? 'Loading...': auth === 'signin' ? 'Sign In' : 'Sign Up'}
                         </button>
+
 
                     {auth === 'signin' ? (
                         <div className='text-[gray]'>
@@ -72,7 +63,7 @@ const Auth = () => {
                         </div>
                     ):(
                         <div className='text-[gray]'>
-                            Already have account{''}
+                            Already have account?{''}
                             <button type='button'  className='text-white hover:underline' onClick={() => toggleAuth('signin')}>
                                 Sign In
                             </button>

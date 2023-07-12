@@ -18,7 +18,7 @@ export const AuthContext = createContext<AuthContextState>({
     isLoading:false,
     signIn: async ()=>{},
     signUp:async ()=>{},
-    logout:async ()=>{}
+    logout:async ()=>{},
 })
 const  AuthContextProvider = ({children}:{children:ReactNode})=>{
     const [initialLoader, setInitialLoader] = useState<boolean>(true)

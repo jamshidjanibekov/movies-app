@@ -1,4 +1,3 @@
-import * as process from "process";
 
 const base_url = process.env.NEXT_PUBLIC_API_DOMAIN  as string
 const public_domain = process.env.NEXT_PUBLIC_DOMAIN as string
@@ -14,7 +13,7 @@ export const API_REQUEST ={
   family:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=3107515`,
   history:`${base_url}/discover/movie?api_key=${api_key}&language=en-Us&with_genre=36`,
   products_list: `${public_domain}/api/products`,
-
+  subscription: `${public_domain}/api/subscription`,
 
 
 }

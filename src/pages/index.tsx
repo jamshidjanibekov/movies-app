@@ -9,14 +9,24 @@ import {useInfoStore} from "../store";
 import {SubscriptionPlan} from "../components";
 
 
-export default function Home({trending, topRated, tvTopRated, popular, documentary, family, history, comedy, products}:HomeProps): JSX.Element {
+export default ({
+                    trending,
+                    topRated,
+                    tvTopRated,
+                    popular,
+                    documentary,
+                    family,
+                    history,
+                    comedy,
+                    products,
+                    subscription,
+                }: HomeProps): JSX.Element => {
     const { modal} = useInfoStore()
     const {isLoading}= useContext(AuthContext)
-    const subscription = false;
 
     if (isLoading) return <>{null}</>;
 
-    if (!subscription) return <SubscriptionPlan products={products}/>
+    if (!subscription.length) return <SubscriptionPlan products={products}/>
 
   return (
     <div className={`relative min-h-screen ${modal && "!h-screen overflow-hidden"}`}>
@@ -44,8 +54,9 @@ export default function Home({trending, topRated, tvTopRated, popular, documenta
   )
 }
 
-export const getServerSideProps:GetServerSideProps<HomeProps> = async()=>{
-    const [trending, topRated, tvTopRated, popular, documentary, comedy, family, history, products] = await Promise.all([
+export const getServerSideProps:GetServerSideProps<HomeProps> = async({req})=>{
+    const user_id = req.cookies.user_id
+    const [trending, topRated, tvTopRated, popular, documentary, comedy, family, history, products, subscription] = await Promise.all([
         fetch(API_REQUEST.trending).then(res =>res.json()),
         fetch(API_REQUEST.top_rated).then(res=>res.json()),
         fetch(API_REQUEST.tv_top_rated).then(res=>res.json()),
@@ -54,17 +65,9 @@ export const getServerSideProps:GetServerSideProps<HomeProps> = async()=>{
         fetch(API_REQUEST.comedy).then(res=>res.json()),
         fetch(API_REQUEST.family).then(res=>res.json()),
         fetch(API_REQUEST.history).then(res=>res.json()),
-        fetch(API_REQUEST.products_list).then(res => res.json())
+        fetch(API_REQUEST.products_list).then(res => res.json()),
+        fetch(`${API_REQUEST.subscription}/${user_id}`).then(res => res.json())
     ])
-
-  // const trending = await fetch(API_REQUEST.trending).then(res =>res.json());
-  // const topRated = await fetch(API_REQUEST.top_rated).then(res=>res.json());
-  // const tvTopRated = await fetch(API_REQUEST.tv_top_rated).then(res=>res.json());
-  // const popular = await  fetch(API_REQUEST.popular).then(res=>res.json());
-  // const documentary = await  fetch(API_REQUEST.documentary).then(res=>res.json());
-  // const comedy = await  fetch(API_REQUEST.comedy).then(res=>res.json());
-  // const family = await  fetch(API_REQUEST.family).then(res=>res.json());
-  // const history = await  fetch(API_REQUEST.history).then(res=>res.json());
 
 
 
@@ -79,6 +82,7 @@ export const getServerSideProps:GetServerSideProps<HomeProps> = async()=>{
       family:family.results,
       history:history.results,
       products:products.products.data,
+      subscription:subscription.subscription.data,
     },
   };
 };
@@ -92,4 +96,5 @@ export const getServerSideProps:GetServerSideProps<HomeProps> = async()=>{
     family:IMovie[]
     history:IMovie[]
     products:Product[]
+      subscription:string[]
   }

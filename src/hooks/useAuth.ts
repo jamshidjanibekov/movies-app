@@ -1,9 +1,9 @@
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,  User} from 'firebase/auth'
 import {auth} from 'src/firebase'
 import {useState} from "react";
-import {useSelect} from "@mui/base";
-import {email} from "@firebase/auth/dist/test/helpers/integration/helpers";
 import {useRouter} from "next/router";
+import Cookies from "js-cookie";
+
 export const useAuth = ()=>{
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError]= useState<string>('');
@@ -16,6 +16,12 @@ export const useAuth = ()=>{
          await createUserWithEmailAndPassword(auth, email,password).then(res =>{
             setUser(res.user);
             router.push('/');
+               fetch('/api/customer',{
+                 method:'POST',
+                 headers:{'Content-Type':'application/json'},
+                 body:JSON.stringify({email:res.user.email, user_id:res.user.uid}),
+             })
+             Cookies.set('user_id',res.user.uid)
             setIsLoading(true);
         })
         .catch(error => setError(error.message))
@@ -27,16 +33,21 @@ export const useAuth = ()=>{
           await signInWithEmailAndPassword(auth, email,password).then(res =>{
             setUser(res.user);
             router.push('/');
-            setIsLoading(true);
+              Cookies.set('user_id',res.user.uid)
+              setIsLoading(true);
         })
             .catch(error => setError(error.message))
             .finally(()=>setIsLoading(false))
     }
     const  logout = async ()=>{
         setIsLoading(true)
-        signOut(auth).then(()=>setUser(null))
-        .catch(error => setError(error.message))
-        .finally(()=>setIsLoading(false))
+        signOut(auth)
+            .then(()=>{
+                setUser(null)
+                Cookies.remove('user_id')
+            })
+            .catch(error => setError(error.message))
+            .finally(()=>setIsLoading(false))
     }
     return{error, isLoading, user, signIn, signUp, logout, setUser, setIsLoading }
 }
