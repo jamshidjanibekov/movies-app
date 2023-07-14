@@ -4,8 +4,14 @@ import { AiOutlineUser} from "react-icons/ai";
 import Link from "next/link";
 import {MdOutlineSubscriptions} from "react-icons/md";
 import {MembershipPlan} from "../components";
+import {GetServerSideProps} from "next";
+import {API_REQUEST} from "../services/api.service";
+import {Stripe} from "stripe";
+import {Subscription} from "src/interfaces/app.interface"
+import moment from "moment";
 
-const Account = () => {
+const Account = ({subscription}:AccountProps) => {
+    console.log(subscription)
   return (
     <>
       <Head>
@@ -31,13 +37,13 @@ const Account = () => {
                 <h1 className='text-3xl md:text-4xl'>Account</h1>
                 <div className='-ml-1 flex items-center gap-x-1.5'>
                     <MdOutlineSubscriptions className='w-5 h-5 text-red-500'/>
-                    <p className='text-md font-semibold text-[#555]'>Member since 15 July</p>
+                    <p className='text-md font-semibold text-[#555]'>Member since {moment(subscription.current_period_start * 1000).format('DD MM yyyy')}  </p>
                 </div>
             </div>
-            <MembershipPlan/>
+            <MembershipPlan subscription={subscription}/>
             <div className='mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0  md:border-t md:border-b-0  md:pb-0'>
                 <h4 className='text-lg text-[gray]'>Plan Details</h4>
-                <div className='col-span-2 font-medium'>Premium</div>
+                <div className='col-span-2 font-medium'>{subscription.plan.nickname}</div>
                 <p className='cursor-pointer text-blue-500 hover:underline md:text-right'>Change Plane</p>
             </div>
             <div className='mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0  md:border-t md:border-b-0  md:pb-0'>
@@ -51,3 +57,21 @@ const Account = () => {
 }
 
 export default Account;
+export const getServerSideProps:GetServerSideProps<AccountProps> = async({req})=>{
+    const user_id = req.cookies.user_id
+    if (!user_id){
+        return {
+            redirect:{destination:'/auth', permanent:false}
+        }
+    }
+    const subscription = await fetch(`${API_REQUEST.subscription}/${user_id}`).then(res => res.json())
+
+    return {
+        props:{
+            subscription:subscription.subscription.data[0]
+        },
+    }
+}
+interface  AccountProps{
+    subscription:Subscription
+}

@@ -1,3 +1,5 @@
+import {date} from "yup";
+
 export interface IMovie {
   adult: boolean
   backdrop_path: string
@@ -31,4 +33,25 @@ export  interface  Product{
     adv:string;
   }
   name:string;
+}
+export interface Subscription{
+  current_period_start:number;
+  id:String;
+  current_period_end:number;
+  plan:{
+    amount:true;
+    active:boolean;
+    nickname:string;
+  };
+  default_payment_method:{
+    card:{
+      brand:string;
+      exp_month:number;
+      exp_year:number;
+      last4:number;
+    }
+  }
+  customer:{
+    email:string;
+  }
 }
