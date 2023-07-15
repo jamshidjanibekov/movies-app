@@ -46,10 +46,9 @@ const Account = ({subscription}:AccountProps) => {
                 <div className='col-span-2 font-medium'>{subscription.plan.nickname}</div>
                 <p className='cursor-pointer text-blue-500 hover:underline md:text-right'>Change Plane</p>
             </div>
-            <div className='mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0  md:border-t md:border-b-0  md:pb-0'>
+            <div className='f mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0  md:border-t md:border-b-0  md:pb-0'>
                 <h4 className='text-lg text-[gray]'>Settings</h4>
-                <p className='col-span-3 cursor-pointer text-blue-500 hover:underline'>Sing out of all devices</p>
-
+                <p className=' col-span-1 cursor-pointer text-blue-500 hover:underline'>Sing out of all devices</p>
             </div>
         </main>
     </>
@@ -64,7 +63,17 @@ export const getServerSideProps:GetServerSideProps<AccountProps> = async({req})=
             redirect:{destination:'/auth', permanent:false}
         }
     }
-    const subscription = await fetch(`${API_REQUEST.subscription}/${user_id}`).then(res => res.json())
+    const subscription = await fetch(`${API_REQUEST.subscription}/${user_id}`).then(res => res.json());
+    console.log(subscription)
+
+    if (!subscription.subscription.data.length){
+        return {
+            redirect:{
+                destination: './',
+                permanent: false,
+            },
+        };
+    }
 
     return {
         props:{

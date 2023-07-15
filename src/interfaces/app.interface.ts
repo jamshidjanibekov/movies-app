@@ -53,5 +53,8 @@ export interface Subscription{
   }
   customer:{
     email:string;
+    metadata:{
+      user_id:string;
+    }
   }
 }
