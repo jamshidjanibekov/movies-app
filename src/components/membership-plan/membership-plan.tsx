@@ -41,8 +41,11 @@ const MembershipPlan = ({subscription}:MembershipPlanProps)=>{
                 <div className=' flex flex-col justify-between pt-4 pb-4 md:flex-row md:pb-0'>
                     <div>
                         <div className='flex items-center gap-2'>
-                            <span className='p-2 py-2 px-3 uppercase rounded bg-white/20'>{subscription.default_payment_method.card.brand}</span>
-                            **** **** **** {subscription.default_payment_method.card.last4}
+                            <span className='p-2 py-2 px-3 uppercase rounded bg-white/20'>
+                                {subscription.default_payment_method
+                                    ? subscription.default_payment_method.card.brand
+                                : subscription.default_payment_method}</span>
+                            **** **** **** {subscription.default_payment_method ? subscription.default_payment_method.card.last4 :subscription.default_payment_method}
                         </div>
                         <p className='mt-4'>Your next billing date is {moment(subscription.current_period_end * 1000).format('DD MM yyyy')} </p>
                     </div>

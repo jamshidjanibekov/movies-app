@@ -9,9 +9,13 @@ import {API_REQUEST} from "../services/api.service";
 import {Stripe} from "stripe";
 import {Subscription} from "src/interfaces/app.interface"
 import moment from "moment";
+import {useAuth} from "../hooks/useAuth";
+
 
 const Account = ({subscription}:AccountProps) => {
-    console.log(subscription)
+
+    const {logout} = useAuth()
+
   return (
     <>
       <Head>
@@ -48,7 +52,7 @@ const Account = ({subscription}:AccountProps) => {
             </div>
             <div className='f mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0  md:border-t md:border-b-0  md:pb-0'>
                 <h4 className='text-lg text-[gray]'>Settings</h4>
-                <p className=' col-span-1 cursor-pointer text-blue-500 hover:underline'>Sing out of all devices</p>
+                <p className=' col-span-1 cursor-pointer text-blue-500 hover:underline' onClick={logout}>Sing out of all devices</p>
             </div>
         </main>
     </>
