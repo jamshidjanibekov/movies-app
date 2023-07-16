@@ -22,8 +22,8 @@ const Row = ({title, movies, isBig = false}:RowProps) => {
   };
 
   return( 
-    <div className=" h-[500px] space-y-1 md:space-y-2">
-      <h1 className="w-56   cursor-pointer text-lg md:text-2x1 font-semibold text-[#e5e5e5] hover:text-white transition duration-200">{title}</h1>
+    <div className=" md:h-[500px] space-y-3 md:space-y-2">
+      <h2 className="w-56   cursor-pointer text-lg mt-4 md:mt-0 md:text-2x1 font-semibold text-[#e5e5e5] hover:text-white transition duration-200">{title}</h2>
       {/* Corouse */}
       <div className="group relative  md:ml-2">
         <AiFillCaretLeft className={`absolute  top-0 bottom-0 left-2 z-40 m-auto h-6 w-6 cursor-pointer opacity-0 group-hover:opacity-100 transition duration-200 hover:scale-125 ${!moved && 'hidden'}`}  onClick={() => handleClick('left')} />

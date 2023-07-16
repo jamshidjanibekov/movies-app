@@ -35,7 +35,7 @@ const Auth = () => {
         <link rel="icon" href='/favicon.ico' />
       </Head>
 
-        <Image src={'https://rb.gy/mq245'} alt={'bg'} fill className='object-cover -z-10 !hidden sm:!inline obacity-60'/>
+        <Image src={'https://rb.gy/mq245'} alt={'bg'} fill className='object-cover -z-10 !hidden sm:!inline opacity-5'/>
         <Image src={'/logo.svg'} alt={'logo'} width={70} height={70} className={"absolute left-4 top-4 cursor-pointer object-contain"}/>
 
             <Formik initialValues={{email: '', password: ''}} onSubmit={onSubmit} validationSchema={validation}>
