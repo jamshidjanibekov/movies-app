@@ -6,8 +6,7 @@ Full stack app with subscription plan. The customer can log in and register on t
 
 # Demo
 
-https://jamshiddev.vercel.app/auth
-
+https://janibekovdev.vercel.app/auth
 # Stack
 -NextJs
 
