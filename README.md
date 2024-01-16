@@ -7,19 +7,34 @@ Full stack app with subscription plan. The customer can log in and register on t
 
 https://janibekovdev.vercel.app/auth
 # Stack
+
 -NextJs
+
 -TypeScript
+
 -NodeJS
+
 -ExpressJs
+
 -React
+
 -Context
+
 -Zustand
+
 -Stripe
+
 -Firebase (auth, db)
+
 -Formik
+
 -SSR
+
 -SEO
+
 -Material UI
+
 -Subscription Plan
+
 -Payment
 -Tailwind CSS
